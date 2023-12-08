@@ -1,0 +1,49 @@
+forwarder:
+    densify:
+        url:
+            scheme: https
+            host: <instance>.densify.com
+            port: 443
+            username: <Densify user>
+#            password: <plaintext Densify password, or:>
+#            encrypted_password: <encrypted Densify password>
+        endpoint: /CIRBA/api/v2/
+    proxy:
+        url:
+            scheme: https
+            host: proxy.company.com
+            port: 443
+            username: <proxy user>
+#            password: <plaintext proxy password, or:>
+#            encrypted_password: <encrypted proxy password>
+#        auth: <Basic (default)|NTLM>
+#        server: <proxy server, required for NTLM>
+#        domain: <proxy domain, required for NTLM>
+#    prefix: <zip file prefix>
+prometheus:
+    url:
+        scheme: <http (default)|https>
+        host: <Prometheus hostname, in-cluster it's recommended to use the internal service name is recommended (i.e. service_name.namespace)>
+        port: <Prometheus port|9090 (default)>
+#        username: <Prometheus basic auth username / file name containing this info>
+#        password: <Prometheus basic auth password / file name containing this info>
+#    bearer_token: /var/run/secrets/kubernetes.io/serviceaccount/token
+#    ca_cert: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+collection:
+#    include: # if the include map is omitted or empty, all entity types are included
+#        cluster: true
+#        container: true
+#        node: true
+#        nodegroup: true
+#        quota: true
+#    interval: <days|hours (default)|minutes>
+#    interval_size: 1
+#    history: 1
+#    offset: 0
+#    sample_rate: 5
+#    node_group_list: label_cloud_google_com_gke_nodepool,label_eks_amazonaws_com_nodegroup,label_agentpool,label_pool_name,label_alpha_eksctl_io_nodegroup_name,label_kops_k8s_io_instancegroup
+clusters:
+    - name: my-cluster
+#      identifiers: # identifiers is a map of Prometheus labels (name and value) to uniquely identify the cluster; if omitted, only one cluster can be present in the list
+#        cluster: my-cluster
+#debug: <true|false (default)>
