@@ -245,14 +245,15 @@ func (pm *parameterMap) populate() (fc *fileConfig, err error) {
 		}
 	}
 	// the meta config (config path, filename and type) are only available at the first Viper instance
-	v := vipers[0]
-	fc = getFileConfig(v)
-	if fc.configType() == mapType {
-		v.SetConfigName(fc.file)
-		v.SetConfigType(fc.typ)
-		v.AddConfigPath(fc.dir)
-		e := v.ReadInConfig()
-		pm.fromFile = e == nil
+	fc = getFileConfig(vipers[0])
+	for _, v := range vipers {
+		if fc.configType() == mapType {
+			v.SetConfigName(fc.file)
+			v.SetConfigType(fc.typ)
+			v.AddConfigPath(fc.dir)
+			e := v.ReadInConfig()
+			pm.fromFile = e == nil
+		}
 	}
 	// resolve the values
 	resolve(pm.stringValues)
