@@ -13,13 +13,19 @@ const (
 	DefaultPolicy     = "default"
 	ExponentialPolicy = "exponential"
 	JitterPolicy      = "jitter"
+	ConstantPolicy    = "const"
 )
+
+func ConstantBackoff(min, _ time.Duration, _ int, _ *http.Response) time.Duration {
+	return min
+}
 
 var policies = map[string]rhttp.Backoff{
 	Empty:             rhttp.DefaultBackoff,
 	DefaultPolicy:     rhttp.DefaultBackoff,
 	ExponentialPolicy: rhttp.DefaultBackoff,
 	JitterPolicy:      rhttp.LinearJitterBackoff,
+	ConstantPolicy:    ConstantBackoff,
 }
 
 type RetryConfig struct {
@@ -34,8 +40,8 @@ type RetryConfig struct {
 // Validate must be called once, after rc has been constructed / unmarshalled
 func (rc *RetryConfig) Validate() (err error) {
 	if rc != nil {
-		if err = validDuration(rc.WaitMin); err == nil {
-			if err = validDuration(rc.WaitMin); err == nil {
+		if err = validDurations(0, rc.WaitMin, false); err == nil {
+			if err = validDurations(rc.WaitMin, rc.WaitMin, true); err == nil {
 				if err = validPositive(rc.MaxAttempts); err == nil {
 					if rc.backoff = policies[strings.ToLower(rc.Policy)]; rc.backoff == nil {
 						err = fmt.Errorf("invalid backoff policy %s", rc.Policy)
@@ -65,9 +71,18 @@ func (rc *RetryConfig) NewClient(rt http.RoundTripper) (*http.Client, error) {
 	return c.StandardClient(), nil
 }
 
-func validDuration(d time.Duration) (err error) {
-	if d <= 0 {
-		err = fmt.Errorf("duration %v must be positive", d)
+func validDurations(d1, d2 time.Duration, equalAllowed bool) (err error) {
+	var test bool
+	var operator string
+	if equalAllowed {
+		test = d2 >= d1
+		operator = ">"
+	} else {
+		test = d2 > d1
+		operator = ">="
+	}
+	if !test {
+		err = fmt.Errorf("invalid durations: %v %s %v", d1, operator, d2)
 	}
 	return
 }
