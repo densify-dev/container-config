@@ -56,7 +56,7 @@ func (rc *RetryConfig) Validate() (err error) {
 
 // NewClient should be called only after Validate has been called, to make sure
 // that rc is a valid RetryConfig
-func (rc *RetryConfig) NewClient(rt http.RoundTripper) (*http.Client, error) {
+func (rc *RetryConfig) NewClient(rt http.RoundTripper, logger interface{}) (*http.Client, error) {
 	c := rhttp.NewClient()
 	if rc != nil {
 		if !rc.isValid {
@@ -68,6 +68,16 @@ func (rc *RetryConfig) NewClient(rt http.RoundTripper) (*http.Client, error) {
 		c.Backoff = rc.backoff
 	}
 	c.HTTPClient = &http.Client{Transport: rt}
+	// set the logger (rhttp default logger is debug-level, too verbose)
+	if logger != nil {
+		switch logger.(type) {
+		case rhttp.Logger, rhttp.LeveledLogger:
+			// OK
+		default:
+			return nil, fmt.Errorf("invalid logger type %T", logger)
+		}
+	}
+	c.Logger = logger
 	return c.StandardClient(), nil
 }
 
