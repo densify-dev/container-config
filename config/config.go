@@ -10,7 +10,7 @@ import (
 
 type ClusterFilterParameters struct {
 	Name        string         `yaml:"name"`
-	Identifiers model.LabelSet `yaml:"identifiers"`
+	Identifiers model.LabelSet `yaml:"identifiers,omitempty"`
 }
 
 type DensifyParameters struct {
