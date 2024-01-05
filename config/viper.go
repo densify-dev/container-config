@@ -153,8 +153,8 @@ func initParameterMap() *parameterMap {
 	_ = pm.addStringValue(proxyUser, "V", "proxy user - value or filename", forwarderEnvPrefix, Empty)
 	_ = pm.addStringValue(proxyPassword, "X", "proxy password - value or filename", forwarderEnvPrefix, Empty)
 	_ = pm.addStringValue(proxyEncPassword, "F", "encrypted proxy password - value or filename", forwarderEnvPrefix, Empty)
-	// 		proxy parameters
-	_ = pm.addStringValue(filePrefix, "I", "zip file prefix", Empty, Empty)
+	// 		forwarder parameters
+	_ = pm.addStringValue(filePrefix, "I", "zip file prefix", forwarderEnvPrefix, Empty)
 
 	return pm
 }
