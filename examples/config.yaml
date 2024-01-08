@@ -7,7 +7,7 @@ forwarder:
             username: <Densify user>
 #            password: <plaintext Densify password, or:>
 #            encrypted_password: <encrypted Densify password>
-        endpoint: /CIRBA/api/v2/
+        endpoint: /api/v2/
 # the entire retry section is optional, if omitted then the default values below are used
 #        retry:
 #            wait_min: 1 # in seconds
@@ -25,7 +25,7 @@ forwarder:
 #        auth: <Basic (default)|NTLM>
 #        server: <proxy server, required for NTLM>
 #        domain: <proxy domain, required for NTLM>
-    prefix: <zip file prefix>
+#    prefix: <zip file prefix>
 prometheus:
     url:
         scheme: <http (default)|https>
