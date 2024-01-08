@@ -17,11 +17,14 @@ type UrlConfig struct {
 }
 
 const (
-	Http                  = "http"
-	Https                 = Http + "s"
-	NoPort         uint64 = 99999 // 0 is a valid (system) port, so need something > maxPort
-	maxPort        uint64 = 65535
-	hostPortFormat        = "%s:%d"
+	Slash                   = "/"
+	Http                    = "http"
+	Https                   = Http + "s"
+	DefaultHttpPort  uint64 = 80
+	DefaultHttpsPort uint64 = 443
+	NoPort           uint64 = 99999 // 0 is a valid (system) port, so need something > maxPort
+	maxPort          uint64 = 65535
+	hostPortFormat          = "%s:%d"
 )
 
 var validSchemes = map[string]bool{Http: true, Https: true}
@@ -50,12 +53,13 @@ func (uc *UrlConfig) finalize() (err error) {
 	if sc, err = validScheme(uc.Scheme); err != nil {
 		return
 	}
+	hostElems := strings.SplitN(uc.Host, Slash, 2)
 	var h string
-	if uc.Port == NoPort {
-		h = uc.Host
+	if omitPort(sc, uc.Port) {
+		h = hostElems[0]
 	} else {
 		if err = validatePort(uc.Port); err == nil {
-			h = fmt.Sprintf(hostPortFormat, uc.Host, uc.Port)
+			h = fmt.Sprintf(hostPortFormat, hostElems[0], uc.Port)
 		} else {
 			return
 		}
@@ -63,6 +67,9 @@ func (uc *UrlConfig) finalize() (err error) {
 	u := &url.URL{
 		Scheme: sc,
 		Host:   h,
+	}
+	if len(hostElems) > 1 {
+		u.Path = Slash + hostElems[1]
 	}
 	uc.Url = u.String()
 	return
@@ -74,6 +81,12 @@ func validScheme(scheme string) (s string, err error) {
 		err = fmt.Errorf("invalid scheme: %s", scheme)
 	}
 	return
+}
+
+func omitPort(scheme string, port uint64) bool {
+	return port == NoPort ||
+		(scheme == Http) && (port == DefaultHttpPort) ||
+		(scheme == Https) && (port == DefaultHttpsPort)
 }
 
 func validatePort(port uint64) (err error) {
