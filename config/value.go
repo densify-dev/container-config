@@ -5,7 +5,6 @@ import (
 )
 
 const (
-	Empty = ""
 	Comma = ","
 	Dot   = "."
 )

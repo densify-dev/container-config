@@ -2,10 +2,15 @@ package config
 
 import (
 	"fmt"
+	rconf "github.com/densify-dev/retry-config/config"
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/common/sigv4"
 	"strconv"
 	"strings"
+)
+
+const (
+	Empty = rconf.Empty
 )
 
 type ClusterFilterParameters struct {
@@ -14,9 +19,9 @@ type ClusterFilterParameters struct {
 }
 
 type DensifyParameters struct {
-	UrlConfig   *UrlConfig   `yaml:"url"`
-	Endpoint    string       `yaml:"endpoint"`
-	RetryConfig *RetryConfig `yaml:"retry,omitempty"`
+	UrlConfig   *UrlConfig         `yaml:"url"`
+	Endpoint    string             `yaml:"endpoint"`
+	RetryConfig *rconf.RetryConfig `yaml:"retry,omitempty"`
 }
 
 type ProxyParameters struct {
@@ -37,7 +42,7 @@ type PrometheusParameters struct {
 	BearerToken string             `yaml:"bearer_token,omitempty"`
 	CaCertPath  string             `yaml:"ca_cert,omitempty"`
 	SigV4Config *sigv4.SigV4Config `yaml:"sigv4,omitempty"`
-	RetryConfig *RetryConfig       `yaml:"retry,omitempty"`
+	RetryConfig *rconf.RetryConfig `yaml:"retry,omitempty"`
 }
 
 type CollectionParameters struct {
