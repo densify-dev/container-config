@@ -63,7 +63,7 @@ const (
 	defDensifyPort     uint64 = 443
 	defDensifyScheme          = Https
 	defDensifyHost            = "localhost"
-	defDensifyEndpoint        = "/CIRBA/api/v2/"
+	defDensifyEndpoint        = "/api/v2/"
 	defProxyPort       uint64 = 443
 	defProxyAuth              = "Basic"
 )

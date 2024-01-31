@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	rconf "github.com/densify-dev/retry-config/config"
+	rconsts "github.com/densify-dev/retry-config/consts"
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/common/sigv4"
 	"strconv"
@@ -10,7 +11,7 @@ import (
 )
 
 const (
-	Empty = rconf.Empty
+	Empty = rconsts.Empty
 )
 
 type ClusterFilterParameters struct {
