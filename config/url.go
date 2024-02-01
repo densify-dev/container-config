@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	rnet "github.com/densify-dev/retry-config/network"
 	"net/url"
 	"strings"
 )
@@ -22,8 +23,7 @@ const (
 	Https                   = Http + "s"
 	DefaultHttpPort  uint64 = 80
 	DefaultHttpsPort uint64 = 443
-	NoPort           uint64 = 99999 // 0 is a valid (system) port, so need something > maxPort
-	maxPort          uint64 = 65535
+	IgnorePort       uint64 = 99999 // 0 is a valid port, need another invalid value indicating "ignore me"
 	hostPortFormat          = "%s:%d"
 )
 
@@ -84,14 +84,12 @@ func validScheme(scheme string) (s string, err error) {
 }
 
 func omitPort(scheme string, port uint64) bool {
-	return port == NoPort ||
+	return port == IgnorePort ||
 		(scheme == Http) && (port == DefaultHttpPort) ||
 		(scheme == Https) && (port == DefaultHttpsPort)
 }
 
 func validatePort(port uint64) (err error) {
-	if port > maxPort {
-		err = fmt.Errorf("invalid port number: %d > %d", port, maxPort)
-	}
+	_, err = rnet.NewPort(port)
 	return
 }

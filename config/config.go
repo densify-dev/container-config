@@ -12,6 +12,8 @@ import (
 
 const (
 	Empty = rconsts.Empty
+	Comma = ","
+	Dot   = "."
 )
 
 type ClusterFilterParameters struct {

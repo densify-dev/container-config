@@ -60,11 +60,11 @@ const (
 	defIntervalSize    uint64 = 1
 	defSampleRate      uint64 = 5
 	defHistory         uint64 = 1
-	defDensifyPort     uint64 = 443
+	defDensifyPort            = DefaultHttpsPort
 	defDensifyScheme          = Https
 	defDensifyHost            = "localhost"
 	defDensifyEndpoint        = "/api/v2/"
-	defProxyPort       uint64 = 443
+	defProxyPort              = DefaultHttpsPort
 	defProxyAuth              = "Basic"
 )
 
