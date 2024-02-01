@@ -24,7 +24,6 @@ const (
 	DefaultHttpPort  uint64 = 80
 	DefaultHttpsPort uint64 = 443
 	IgnorePort       uint64 = 99999 // 0 is a valid port, need another invalid value indicating "ignore me"
-	hostPortFormat          = "%s:%d"
 )
 
 var validSchemes = map[string]bool{Http: true, Https: true}
@@ -58,8 +57,9 @@ func (uc *UrlConfig) finalize() (err error) {
 	if omitPort(sc, uc.Port) {
 		h = hostElems[0]
 	} else {
-		if err = validatePort(uc.Port); err == nil {
-			h = fmt.Sprintf(hostPortFormat, hostElems[0], uc.Port)
+		var p rnet.Port
+		if p, err = rnet.NewPort(uc.Port); err == nil {
+			h = p.Addr(hostElems[0])
 		} else {
 			return
 		}
@@ -87,9 +87,4 @@ func omitPort(scheme string, port uint64) bool {
 	return port == IgnorePort ||
 		(scheme == Http) && (port == DefaultHttpPort) ||
 		(scheme == Https) && (port == DefaultHttpsPort)
-}
-
-func validatePort(port uint64) (err error) {
-	_, err = rnet.NewPort(port)
-	return
 }
