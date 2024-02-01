@@ -3,7 +3,7 @@ module github.com/densify-dev/container-config
 go 1.21
 
 require (
-	github.com/densify-dev/retry-config v1.0.2
+	github.com/densify-dev/retry-config v1.0.3
 	github.com/prometheus/common v0.46.0
 	github.com/prometheus/common/sigv4 v0.1.0
 	github.com/spf13/pflag v1.0.5
