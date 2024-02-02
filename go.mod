@@ -3,7 +3,7 @@ module github.com/densify-dev/container-config
 go 1.21
 
 require (
-	github.com/densify-dev/retry-config v1.0.3
+	github.com/densify-dev/net-utils v1.0.4
 	github.com/prometheus/common v0.46.0
 	github.com/prometheus/common/sigv4 v0.1.0
 	github.com/spf13/pflag v1.0.5
@@ -12,7 +12,7 @@ require (
 )
 
 require (
-	github.com/aws/aws-sdk-go v1.50.8 // indirect
+	github.com/aws/aws-sdk-go v1.50.10 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect

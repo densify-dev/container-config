@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
-	rconf "github.com/densify-dev/retry-config/config"
-	rconsts "github.com/densify-dev/retry-config/consts"
+	ncommon "github.com/densify-dev/net-utils/common"
+	"github.com/densify-dev/net-utils/rhttp"
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/common/sigv4"
 	"strconv"
@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	Empty = rconsts.Empty
+	Empty = ncommon.Empty
 	Comma = ","
 	Dot   = "."
 )
@@ -24,7 +24,7 @@ type ClusterFilterParameters struct {
 type DensifyParameters struct {
 	UrlConfig   *UrlConfig         `yaml:"url"`
 	Endpoint    string             `yaml:"endpoint"`
-	RetryConfig *rconf.RetryConfig `yaml:"retry,omitempty"`
+	RetryConfig *rhttp.RetryConfig `yaml:"retry,omitempty"`
 }
 
 type ProxyParameters struct {
@@ -45,7 +45,7 @@ type PrometheusParameters struct {
 	BearerToken string             `yaml:"bearer_token,omitempty"`
 	CaCertPath  string             `yaml:"ca_cert,omitempty"`
 	SigV4Config *sigv4.SigV4Config `yaml:"sigv4,omitempty"`
-	RetryConfig *rconf.RetryConfig `yaml:"retry,omitempty"`
+	RetryConfig *rhttp.RetryConfig `yaml:"retry,omitempty"`
 }
 
 type CollectionParameters struct {

@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	rnet "github.com/densify-dev/retry-config/network"
+	nnet "github.com/densify-dev/net-utils/network"
 	"net/url"
 	"strings"
 )
@@ -57,17 +57,14 @@ func (uc *UrlConfig) finalize() (err error) {
 	if omitPort(sc, uc.Port) {
 		h = hostElems[0]
 	} else {
-		var p rnet.Port
-		if p, err = rnet.NewPort(uc.Port); err == nil {
+		var p nnet.Port
+		if p, err = nnet.NewPort(uc.Port); err == nil {
 			h = p.Addr(hostElems[0])
 		} else {
 			return
 		}
 	}
-	u := &url.URL{
-		Scheme: sc,
-		Host:   h,
-	}
+	u := &url.URL{Scheme: sc, Host: h}
 	if len(hostElems) > 1 {
 		u.Path = Slash + hostElems[1]
 	}
