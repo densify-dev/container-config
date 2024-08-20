@@ -3,7 +3,7 @@ module github.com/densify-dev/container-config
 go 1.22
 
 require (
-	github.com/densify-dev/net-utils v1.0.6
+	github.com/densify-dev/net-utils v1.0.7
 	github.com/prometheus/common v0.55.0
 	github.com/prometheus/common/sigv4 v0.1.0
 	github.com/spf13/pflag v1.0.5
