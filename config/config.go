@@ -5,7 +5,7 @@ import (
 	ncommon "github.com/densify-dev/net-utils/common"
 	"github.com/densify-dev/net-utils/rhttp"
 	"github.com/prometheus/common/model"
-	"github.com/prometheus/common/sigv4"
+	"github.com/prometheus/sigv4"
 	"strconv"
 	"strings"
 )
