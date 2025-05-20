@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"github.com/go-viper/encoding/javaproperties"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"strings"
@@ -218,8 +219,10 @@ func initVipers() (vs []*viper.Viper, m map[string]*viper.Viper) {
 	l := len(envPrefixes)
 	vs = make([]*viper.Viper, l)
 	m = make(map[string]*viper.Viper, l)
+	codecRegistry := viper.NewCodecRegistry()
+	codecRegistry.RegisterCodec(defConfigType, &javaproperties.Codec{})
 	for i, envPrefix := range envPrefixes {
-		v := viper.New()
+		v := viper.NewWithOptions(viper.WithCodecRegistry(codecRegistry))
 		v.SetTypeByDefaultValue(true)
 		v.SetEnvPrefix(envPrefix)
 		v.AutomaticEnv()
