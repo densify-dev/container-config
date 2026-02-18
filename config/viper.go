@@ -57,7 +57,7 @@ const (
 	defPromScheme             = Http
 	defPromPort        uint64 = 9090
 	defInclude                = "container,node,cluster,nodegroup,quota"
-	defNodeGroupList          = "label_worker_gardener_cloud_pool,label_karpenter_sh_nodepool,label_cloud_google_com_gke_nodepool,label_eks_amazonaws_com_nodegroup,label_agentpool,label_pool_name,label_alpha_eksctl_io_nodegroup_name,label_kops_k8s_io_instancegroup"
+	defNodeGroupList          = "label_labeler_kubex_ai_node_group,label_worker_gardener_cloud_pool,label_karpenter_sh_nodepool,label_cloud_google_com_gke_nodepool,label_eks_amazonaws_com_nodegroup,label_agentpool,label_pool_name,label_alpha_eksctl_io_nodegroup_name,label_kops_k8s_io_instancegroup"
 	defInterval               = "hours"
 	defIntervalSize    uint64 = 1
 	defSampleRate      uint64 = 5
