@@ -2,12 +2,13 @@ package config
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
+
 	ncommon "github.com/densify-dev/net-utils/common"
 	"github.com/densify-dev/net-utils/rhttp"
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/sigv4"
-	"strconv"
-	"strings"
 )
 
 const (
@@ -59,6 +60,7 @@ type CollectionParameters struct {
 	SampleRate    uint64          `yaml:"sample_rate"`
 	SampleRateSt  string          `yaml:"-"`
 	NodeGroupList string          `yaml:"node_group_list"`
+	RoleList      string          `yaml:"role_list"`
 }
 
 type Parameters struct {
@@ -101,6 +103,7 @@ func merge(p *Parameters, pm *parameterMap) (newP *Parameters, err error) {
 				Offset:        pm.uint64Values[offset].v,
 				SampleRate:    pm.uint64Values[sampleRate].v,
 				NodeGroupList: pm.stringValues[nodeGroupList].v,
+				RoleList:      pm.stringValues[roleList].v,
 			},
 			Clusters: []*ClusterFilterParameters{cfp},
 			Debug:    pm.boolValues[debug].v,
@@ -151,6 +154,7 @@ func merge(p *Parameters, pm *parameterMap) (newP *Parameters, err error) {
 			setValue(&newP.Collection.Offset, pm.uint64Values, offset)
 			setValue(&newP.Collection.SampleRate, pm.uint64Values, sampleRate)
 			setValue(&newP.Collection.NodeGroupList, pm.stringValues, nodeGroupList)
+			setValue(&newP.Collection.RoleList, pm.stringValues, roleList)
 			// cluster parameter
 			if cfp, set := getClusterFilterParameters(pm); set {
 				newP.Clusters = append(newP.Clusters, cfp)
