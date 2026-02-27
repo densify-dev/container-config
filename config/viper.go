@@ -25,6 +25,7 @@ const (
 	caCert             = "ca_certificate"
 	include            = "include_list"
 	nodeGroupList      = "node_group_list"
+	roleList           = "role_list"
 	interval           = "interval"
 	intervalSize       = "interval_size"
 	sampleRate         = "sample_rate"
@@ -58,6 +59,7 @@ const (
 	defPromPort        uint64 = 9090
 	defInclude                = "container,node,cluster,nodegroup,quota"
 	defNodeGroupList          = "label_labeler_kubex_ai_node_group,label_worker_gardener_cloud_pool,label_karpenter_sh_nodepool,label_cloud_google_com_gke_nodepool,label_eks_amazonaws_com_nodegroup,label_agentpool,label_pool_name,label_alpha_eksctl_io_nodegroup_name,label_kops_k8s_io_instancegroup"
+	defRoleList               = "control-plane,master,infra,worker"
 	defInterval               = "hours"
 	defIntervalSize    uint64 = 1
 	defSampleRate      uint64 = 5
@@ -131,6 +133,7 @@ func initParameterMap() *parameterMap {
 	// collection parameters
 	_ = pm.addStringValue(include, "n", "comma-separated list of data to include in collection: cluster, node, container, nodegroup, quota", Empty, defInclude)
 	_ = pm.addStringValue(nodeGroupList, "g", "comma-separated list of label names to check for building node groups", Empty, defNodeGroupList)
+	_ = pm.addStringValue(roleList, "q", "comma-separated list of role names to check for building node groups", Empty, defRoleList)
 	_ = pm.addStringValue(interval, "k", "interval unit - days/hours/minutes", Empty, defInterval)
 	_ = pm.addUint64Value(intervalSize, "i", "interval size to be used for querying - last interval size of interval unit of data", Empty, defIntervalSize)
 	_ = pm.addUint64Value(sampleRate, "r", "rate of sample points to collect (1 sample every sample rate in minutes)", Empty, defSampleRate)
